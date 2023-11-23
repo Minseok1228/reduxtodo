@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { deleteTodo, switchTodo } from "../redux/modules/todos";
 
-function PrintTodo({ print, filter, btn }) {
+function PrintTodo({ print, filter, btn, detail }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,10 +23,17 @@ function PrintTodo({ print, filter, btn }) {
         .map((todo) => {
           return (
             <Todo key={todo.id}>
-              <NavSection onClick={() => onHandleNavigate(todo.id)}>
-                <p>{todo.title}</p>
-                <p>{todo.body}</p>
-              </NavSection>
+              {detail ? (
+                <NavSection $detail={detail}>
+                  <p>{todo.title}</p>
+                  <p>{todo.body}</p>
+                </NavSection>
+              ) : (
+                <NavSection onClick={() => onHandleNavigate(todo.id)}>
+                  <p>{todo.title}</p>
+                  <p>{todo.body}</p>
+                </NavSection>
+              )}
 
               <button onClick={() => dispatch(switchTodo(todo))}>{btn}</button>
               <button onClick={() => dispatch(deleteTodo(todo.id))}>
@@ -49,7 +56,15 @@ const Todo = styled.li`
   border: 3px solid yellow;
 `;
 const NavSection = styled.section`
-  &:hover {
-    transform: scale(1.05);
-  }
+  ${({ $detail }) => {
+    if ($detail) {
+      return;
+    } else {
+      return css`
+        &:hover {
+          transform: scale(1.05);
+        }
+      `;
+    }
+  }}
 `;

@@ -41,10 +41,10 @@ const Home = () => {
       </form>
       <main>
         <ul>할 일</ul>
-        <PrintTodo print={todos} filter={false} btn={"완료"} />
+        <PrintTodo print={todos} filter={false} btn={"완료"} detail={false} />
 
         <ul>완료한 일</ul>
-        <PrintTodo print={todos} filter={true} btn={"취소"} />
+        <PrintTodo print={todos} filter={true} btn={"취소"} detail={false} />
       </main>
     </>
   );
